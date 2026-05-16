@@ -24,6 +24,22 @@ import java.util.ArrayList;
         return null;
     } // validations before checking if the account exists or not
 
+    public static String numberValidation(String input, String name) {
+        if (input.length() == 0) {
+            return "you have to enter a number in " + name;
+        }
+        try {
+            double number = Double.parseDouble(input);
+            if (number <= 0) {
+                return name + " must be greater than zero";
+            }
+            return null;
+        } catch (NumberFormatException e) {
+            return name + " must be a valid number";
+        }
+    } /*this method takes a doable turns it to string to check if it is an actual number or not
+    and turns it to doable for the rest of the validatation*/
+
     public static String checkUser(String username, String password, ArrayList<String > files){
         int k=0; // this is used to make sure this is the password of the exact username
         boolean check=false,con=false;

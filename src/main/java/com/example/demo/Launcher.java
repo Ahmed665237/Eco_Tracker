@@ -65,7 +65,13 @@ public class Launcher {
                 String type = input.nextLine();
 
                 System.out.println("Distance in km:");
-                double amount = input.nextDouble();
+                String amountInput = input.nextLine();
+                String amountResult = UserValidations.numberValidation(amountInput, "distance");
+                if (amountResult != null) {
+                    System.out.println(amountResult);
+                    return;
+                }
+                double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Transport", LocalDate.now(), type, amount, false);
             } else if (choice == 2) {
@@ -73,7 +79,12 @@ public class Launcher {
                 String type = input.nextLine();
 
                 System.out.println("Hours used:");
-                double amount = input.nextDouble();
+                String amountInput = input.nextLine();
+                String amountResult = UserValidations.numberValidation(amountInput, "hours used");
+                if (amountResult != null) {
+                    return;
+                }
+                double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Electricity", LocalDate.now(), type, amount, false);
             } else if (choice == 3) {
@@ -81,7 +92,12 @@ public class Launcher {
                 String type = input.nextLine();
 
                 System.out.println("Enter duration in minutes:");
-                double amount = input.nextDouble();
+                String amountInput = input.nextLine();
+                String amountResult = UserValidations.numberValidation(amountInput, "duration");
+                if (amountResult != null) {
+                    return;
+                }
+                double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Water", LocalDate.now(), type, amount, false);
             } else if (choice == 4) {
@@ -89,7 +105,12 @@ public class Launcher {
                 String type = input.nextLine();
 
                 System.out.println("Enter number of servings:");
-                double amount = input.nextDouble();
+                String amountInput = input.nextLine();
+                String amountResult = UserValidations.numberValidation(amountInput, "servings");
+                if (amountResult != null) {
+                    return;
+                }
+                double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Food", LocalDate.now(), type, amount, false);
             } else if (choice == 5) {
@@ -97,8 +118,16 @@ public class Launcher {
                 String type = input.nextLine();
 
                 System.out.println("Enter quantity:");
-                double amount = input.nextDouble();
-
+                String amountInput = input.nextLine();
+                String amountResult = UserValidations.numberValidation(amountInput, "quantity");
+                if (amountResult != null) {
+                    return;
+                }
+                double amount = Double.parseDouble(amountInput);
+                /* the double amount = Double.parseDouble(amountInput); is used because if user inputs string
+                * then he will crash the program so this means we will use the same try and catch block
+                * in all the lines well lest turn it to stirng goes in the number validations method and reuturns
+                * it to double again*/
                 System.out.println("Recycled? true/false:");
                 boolean recycled = input.nextBoolean();
 
