@@ -16,6 +16,12 @@ public class ActivityFactory {
                 return new TransportationActivity(date,type,amount);
             case "Electricity":
                 return new ElectricityActivity(date,type,amount);
+            case "Water":
+                return new WaterActivity(date, type, (int) Math.round(amount));
+            case "Food":
+                return new FoodActivity(date, type, (int) Math.round(amount));
+            case "Waste":
+                return new WasteActivity(date, type, (int) Math.round(amount), recycled);
             default:
                 throw new IllegalArgumentException("Invalid category: " + category);
         }
