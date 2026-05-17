@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileReaderService {
@@ -37,5 +39,31 @@ public class FileReaderService {
             e.printStackTrace(); // to say what went wrong
         }
         return filestorer;
+    }
+
+    public static String saveCO2(String username, int choice, double co2, ArrayList<String> co2Files){
+        int categoryIndex=choice+1;
+        for(int i=0;i<co2Files.size();i++){
+            String [] f=co2Files.get(i).split(",");
+            if(f[1].equals(username)){
+                double categoryCO2=Double.parseDouble(f[categoryIndex])+co2;
+                double totalCO2=Double.parseDouble(f[7])+co2;
+                f[categoryIndex]=String.valueOf(categoryCO2);
+                f[7]=String.valueOf(totalCO2);
+                String newLine=f[0]+","+f[1]+","+f[2]+","+f[3]+","+f[4]+","+f[5]+","+f[6]+","+f[7];
+                co2Files.set(i,newLine);
+            }
+        }
+        try {
+            FileWriter writer = new FileWriter("src//main//java//com//example//demo//C02Calculated.csv");
+            writer.write("name,username,transportationCO2,electricityCO2,waterCO2,foodCO2,wasteCO2,totalCO2\n");
+            for (int i=0;i<co2Files.size();i++) {
+                writer.write(co2Files.get(i)+"\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            return "error saving CO2 to file";
+        }
+        return null;
     }
 }

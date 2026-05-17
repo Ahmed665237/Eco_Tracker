@@ -10,6 +10,8 @@ public class Launcher {
 
         FileReaderService fr = new FileReaderService("src//users.csv");
         ArrayList<String> files = fr.readFile();
+        FileReaderService co2Reader = new FileReaderService("src//main//java//com//example//demo//C02Calculated.csv");
+        ArrayList<String> co2Files = co2Reader.readFile();
 
         System.out.println("enter username");
         String username = input.nextLine();
@@ -23,9 +25,10 @@ public class Launcher {
         System.out.println(usernameResult);
         System.out.println(passwordResult);
 
-        String loginResult = UserValidations.checkUser(username, password, files);
+        String loginResult = UserValidations.checkUser(username, password, files);;
 
         if (passwordResult == null && usernameResult == null) {
+
             System.out.println(loginResult);
         }
 
@@ -81,9 +84,8 @@ public class Launcher {
                 System.out.println("Hours used:");
                 String amountInput = input.nextLine();
                 String amountResult = UserValidations.numberValidation(amountInput, "hours used");
-                if (amountResult != null) {
+                if (amountResult != null)
                     return;
-                }
                 double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Electricity", LocalDate.now(), type, amount, false);
@@ -94,9 +96,8 @@ public class Launcher {
                 System.out.println("Enter duration in minutes:");
                 String amountInput = input.nextLine();
                 String amountResult = UserValidations.numberValidation(amountInput, "duration");
-                if (amountResult != null) {
+                if (amountResult != null)
                     return;
-                }
                 double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Water", LocalDate.now(), type, amount, false);
@@ -107,9 +108,8 @@ public class Launcher {
                 System.out.println("Enter number of servings:");
                 String amountInput = input.nextLine();
                 String amountResult = UserValidations.numberValidation(amountInput, "servings");
-                if (amountResult != null) {
+                if (amountResult != null)
                     return;
-                }
                 double amount = Double.parseDouble(amountInput);
 
                 activity = ActivityFactory.createActivity("Food", LocalDate.now(), type, amount, false);
@@ -120,9 +120,8 @@ public class Launcher {
                 System.out.println("Enter quantity:");
                 String amountInput = input.nextLine();
                 String amountResult = UserValidations.numberValidation(amountInput, "quantity");
-                if (amountResult != null) {
+                if (amountResult != null)
                     return;
-                }
                 double amount = Double.parseDouble(amountInput);
                 /* the double amount = Double.parseDouble(amountInput); is used because if user inputs string
                 * then he will crash the program so this means we will use the same try and catch block
@@ -135,8 +134,14 @@ public class Launcher {
             }
 
             if (activity != null) {
-                System.out.println("CO2 = " + activity.calculateCO2());
+                double co2 = activity.calculateCO2();
+                System.out.println("CO2 = " + co2);
+
+                String saveResult = FileReaderService.saveCO2(username, choice, co2, co2Files);
+                if (saveResult != null)
+                    System.out.println(saveResult);
             }
         }
+
     }
 }
