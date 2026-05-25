@@ -41,22 +41,22 @@ public class FileReaderService {
         return filestorer;
     }
 
-    public static String saveCO2(String username, int choice, double co2, ArrayList<String> co2Files){
-        int categoryIndex=choice+1;
+    public static String saveCO2(String name, int choice, double co2, ArrayList<String> co2Files){
+        int categoryIndex=choice;
         for(int i=0;i<co2Files.size();i++){
             String [] f=co2Files.get(i).split(",");
-            if(f[1].equals(username)){
-                double categoryCO2=Double.parseDouble(f[categoryIndex])+co2;
-                double totalCO2=Double.parseDouble(f[7])+co2;
+            if(f[0].equals(name)){
+                double categoryCO2=roundCO2(Double.parseDouble(f[categoryIndex])+co2);
+                double totalCO2=roundCO2(Double.parseDouble(f[6])+co2);
                 f[categoryIndex]=String.valueOf(categoryCO2);
-                f[7]=String.valueOf(totalCO2);
-                String newLine=f[0]+","+f[1]+","+f[2]+","+f[3]+","+f[4]+","+f[5]+","+f[6]+","+f[7];
+                f[6]=String.valueOf(totalCO2);
+                String newLine=f[0]+","+f[1]+","+f[2]+","+f[3]+","+f[4]+","+f[5]+","+f[6];
                 co2Files.set(i,newLine);
             }
         }
         try {
             FileWriter writer = new FileWriter("src//main//java//com//example//demo//C02Calculated.csv");
-            writer.write("name,username,transportationCO2,electricityCO2,waterCO2,foodCO2,wasteCO2,totalCO2\n");
+            writer.write("name,transportationCO2,electricityCO2,waterCO2,foodCO2,wasteCO2,totalCO2\n");
             for (int i=0;i<co2Files.size();i++) {
                 writer.write(co2Files.get(i)+"\n");
             }
@@ -65,5 +65,24 @@ public class FileReaderService {
             return "error saving CO2 to file";
         }
         return null;
+    }
+
+    public static String addCO2Account(String name, ArrayList<String> co2Files){
+        co2Files.add(name+",0.0,0.0,0.0,0.0,0.0,0.0");
+        try {
+            FileWriter writer = new FileWriter("src//main//java//com//example//demo//C02Calculated.csv");
+            writer.write("name,transportationCO2,electricityCO2,waterCO2,foodCO2,wasteCO2,totalCO2\n");
+            for (int i=0;i<co2Files.size();i++) {
+                writer.write(co2Files.get(i)+"\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            return "error saving CO2 account to file";
+        }
+        return null;
+    }
+
+    public static double roundCO2(double co2){
+        return Math.round(co2*100.0)/100.0;
     }
 }

@@ -5,27 +5,29 @@ import java.util.ArrayList;
 
 public class AddAccount {
     public static String addAccount(String firstName, String username, String password, ArrayList<String> files){
-        boolean con= false;
+        FileReaderService co2Reader = new FileReaderService("src//main//java//com//example//demo//C02Calculated.csv");
+        ArrayList<String> co2Files = co2Reader.readFile();
+
         String result=UserValidations.inputValidations(username,"username");
         String result2=UserValidations.inputValidations(password,"password");
-        for(int i=0;i<firstName.length();i++){
-            if(Character.isDigit(firstName.charAt(i)))// a real name cant contain numbers
-                con=true;
-        }
-        if(result2!=null&&result!=null&&con==true)
-            return result+"\n"+result2+"\n"+"name cannot contain numbers";
-        if(result2!=null&&result!=null&&firstName.length()>15)
-            return result+"\n"+result2+"\n"+" name cannot be more than 15 characters";
-        if(con==true)
-            return "name cannot contain numbers";
-        if(firstName.length()>15)
-            return "name cannot be more than 15 characters";
+        String result3=UserValidations.nameValidation(firstName);
+        String result4=UserValidations.accountExists(username,files);
+        if(result3!=null&&result!=null&&result2!=null)
+            return result3+"\n"+result+"\n"+result2;
+        if(result3!=null&&result!=null)
+            return result3+"\n"+result;
+        if(result3!=null&&result2!=null)
+            return result3+"\n"+result2;
         if(result2!=null&&result!=null)
             return result+"\n"+result2;
+        if(result3!=null)
+            return result3;
         if(result!=null)
                 return result;
         if(result2!=null)
             return result2;
+        if(result4!=null)
+            return result4;
         String newUser= firstName+","+username+","+password;
         files.add(newUser);
         // these are if statements to also validate userinput from the userValidations class
@@ -41,6 +43,10 @@ public class AddAccount {
         } catch(IOException e){
             return "error saving user to file";
         }
+
+        String co2Result=FileReaderService.addCO2Account(firstName,co2Files);
+        if(co2Result!=null)
+            return co2Result;
         return null;
     }
 }

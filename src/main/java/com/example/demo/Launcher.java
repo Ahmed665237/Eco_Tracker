@@ -1,147 +1,205 @@
 package com.example.demo;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+// real deal
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
-import java.time.LocalDate;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Launcher {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+public class Launcher extends Application{
+    @FXML
+    private TextField usernameField; // the username you enter  which you login
+    @FXML
+    private PasswordField passwordField; // this is the password field in login
+    @FXML
+    private TextField visiblePasswordField;
+    // when you open the eye in login this will make what you wrote appear
+    @FXML
+    private Label loginmessage; // message to recieve after clicking login
+    @FXML
+    private TextField newNameField; // txt field where you type your name
+    @FXML
+    private TextField newUsernameField; // the new username of the new account you will create
+    @FXML
+    private PasswordField newPasswordField;// the new password of the new account you will create
+    @FXML
+    private Label addAccountMessage; // message that will appear after pressing addaccount button
+    @FXML
+    private TextField visibleNewPasswordField;
+    // this is also the text field in login that will appear by pressing the eye
+    // @FSXML is put above variables and they are named
+    // based on their fxml id
+    @FXML
+    @Override
+    public  void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(Paths.get("src/main/java/com/example/demo/welcome.fxml").toUri().toURL());
+        Scene scene = new Scene(fxmlLoader.load(), 600, 900);
+        stage.setScene(scene);
+        stage.show();
+    }// this loads the welcome scene
+    @FXML
+    public void initialize() { // method runs before screen is created
+        if (visiblePasswordField != null && passwordField != null) {
+            // the if statement checks if these fields are only that scene to prevent error
+            visiblePasswordField.setVisible(false); // this hides normal txt field
+            visiblePasswordField.setManaged(false); // tells java to not treat the hidden part as a layout
+            visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
+            // this part is for the login part
+        }
+        // this begins by showing the password field to reach txt field->click the eye
+        if (visibleNewPasswordField != null && newPasswordField != null) {
+            visibleNewPasswordField.setVisible(false);
+            visibleNewPasswordField.setManaged(false);
+            visibleNewPasswordField.textProperty().bindBidirectional(newPasswordField.textProperty());
+            // this part is for the add account
+        }
+        /*this makes what is written in the password field to be written in the txt field
+        * textproperty  is what  is inside the text or password field and bindbidriectional
+        * is what is like saying write what is being written in the passwordfield*/
+    }
+
+    @FXML
+    public void togglePasswordVisibility(ActionEvent event) {
+        // method runs when clicking on the eye
+        boolean showPassword = !visiblePasswordField.isVisible();
+        // changes its old state when clicked its either true or false
+        visiblePasswordField.setVisible(showPassword);
+        visiblePasswordField.setManaged(showPassword);
+        passwordField.setVisible(!showPassword);
+        passwordField.setManaged(!showPassword);
+        // one has to show and the other disapears
+    }
+    @FXML
+    public void toggleNewPasswordVisibility(ActionEvent event) {
+        boolean showPassword = !visibleNewPasswordField.isVisible();
+        visibleNewPasswordField.setVisible(showPassword);
+        visibleNewPasswordField.setManaged(showPassword);
+        newPasswordField.setVisible(!showPassword);
+        newPasswordField.setManaged(!showPassword);
+    }
+// same method for to check password visibilty but in add account
+    public void Welcome(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Paths.get("src/main/java/com/example/demo/SceneBuilder.fxml").toUri().toURL());
+        Scene scene = new Scene(fxmlLoader.load(), 600, 900);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    public void loginButton(ActionEvent event){
+        loginmessage.setText("");
 
         FileReaderService fr = new FileReaderService("src//users.csv");
         ArrayList<String> files = fr.readFile();
-        FileReaderService co2Reader = new FileReaderService("src//main//java//com//example//demo//C02Calculated.csv");
-        ArrayList<String> co2Files = co2Reader.readFile();
-
-        System.out.println("enter username");
-        String username = input.nextLine();
-
-        System.out.println("enter password");
-        String password = input.nextLine();
+        // this is where files are read and put in an array list
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
         String passwordResult = UserValidations.inputValidations(password, "password");
         String usernameResult = UserValidations.inputValidations(username, "username");
 
-        System.out.println(usernameResult);
-        System.out.println(passwordResult);
-
-        String loginResult = UserValidations.checkUser(username, password, files);;
-
-        if (passwordResult == null && usernameResult == null) {
-
-            System.out.println(loginResult);
+        if(passwordResult!=null&&usernameResult!=null){
+            loginmessage.setText(usernameResult+"\n"+passwordResult);
+            loginmessage.setStyle("-fx-font-size: 13; -fx-text-fill: red; -fx-font-weight: bold;");
+            usernameField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10");
+            passwordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            visiblePasswordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            return;
+        }
+        if(usernameResult!=null){
+            passwordField.setStyle("-fx-border-color:  #DADADA;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            visiblePasswordField.setStyle("-fx-border-color: #DADADA;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            loginmessage.setText(usernameResult);
+            loginmessage.setStyle("-fx-font-size: 13; -fx-text-fill: red; -fx-font-weight: bold;");
+            usernameField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10");
+            return;
+        }
+        if(passwordResult!=null){
+            usernameField.setStyle("-fx-border-color:  #DADADA ;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10");
+            loginmessage.setText(passwordResult);
+            loginmessage.setStyle("-fx-font-size: 13; -fx-text-fill: red; -fx-font-weight: bold;");
+            passwordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            visiblePasswordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            return;
         }
 
-        System.out.println("do you want to add an account");
-        int i = input.nextInt();
-        input.nextLine();
+        String loginResult = UserValidations.checkUser(username, password, files);
 
-        if (i == 1) {
-            System.out.println("enter your name");
-            String name = input.nextLine();
-
-            System.out.println("enter your username");
-            String newUsername = input.nextLine();
-
-            System.out.println("enter your password");
-            String newPassword = input.nextLine();
-
-            String result = AddAccount.addAccount(name, newUsername, newPassword, files);
-            System.out.println(result);
+        if(loginResult!=null){
+            usernameField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10");
+            passwordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            visiblePasswordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            loginmessage.setText(loginResult);
+            loginmessage.setStyle("-fx-font-size: 13; -fx-text-fill: red; -fx-font-weight: bold;");
+            return;
         }
-
-        if (loginResult == null) {
-            System.out.println("Choose category:");
-            System.out.println("1. Transport");
-            System.out.println("2. Electricity");
-            System.out.println("3. Water");
-            System.out.println("4. Food");
-            System.out.println("5. Waste");
-
-            int choice = input.nextInt();
-            input.nextLine();
-
-            Activity activity = null;
-
-            if (choice == 1) {
-                System.out.println("Vehicle type: Car / Bus / Metro / Motorcycle / Taxi / Train / Electric Car / Bike/Walk");
-                String type = input.nextLine();
-
-                System.out.println("Distance in km:");
-                String amountInput = input.nextLine();
-                String amountResult = UserValidations.numberValidation(amountInput, "distance");
-                if (amountResult != null) {
-                    System.out.println(amountResult);
-                    return;
-                }
-                double amount = Double.parseDouble(amountInput);
-
-                activity = ActivityFactory.createActivity("Transport", LocalDate.now(), type, amount, false);
-            } else if (choice == 2) {
-                System.out.println("Device type: AC/Heater / Tech Devices / Kitchen Appliances / Fan");
-                String type = input.nextLine();
-
-                System.out.println("Hours used:");
-                String amountInput = input.nextLine();
-                String amountResult = UserValidations.numberValidation(amountInput, "hours used");
-                if (amountResult != null)
-                    return;
-                double amount = Double.parseDouble(amountInput);
-
-                activity = ActivityFactory.createActivity("Electricity", LocalDate.now(), type, amount, false);
-            } else if (choice == 3) {
-                System.out.println("Enter type: Shower / Laundry / Dishwashing / Watering Plants / Car Washing");
-                String type = input.nextLine();
-
-                System.out.println("Enter duration in minutes:");
-                String amountInput = input.nextLine();
-                String amountResult = UserValidations.numberValidation(amountInput, "duration");
-                if (amountResult != null)
-                    return;
-                double amount = Double.parseDouble(amountInput);
-
-                activity = ActivityFactory.createActivity("Water", LocalDate.now(), type, amount, false);
-            } else if (choice == 4) {
-                System.out.println("Enter meal: Beef / Chicken / Fish / Vegetables / Rice / Dairy / Fast Food");
-                String type = input.nextLine();
-
-                System.out.println("Enter number of servings:");
-                String amountInput = input.nextLine();
-                String amountResult = UserValidations.numberValidation(amountInput, "servings");
-                if (amountResult != null)
-                    return;
-                double amount = Double.parseDouble(amountInput);
-
-                activity = ActivityFactory.createActivity("Food", LocalDate.now(), type, amount, false);
-            } else if (choice == 5) {
-                System.out.println("Enter waste type: Plastic Bottle / Plastic Bag / Paper / Glass / Battery / Electronics");
-                String type = input.nextLine();
-
-                System.out.println("Enter quantity:");
-                String amountInput = input.nextLine();
-                String amountResult = UserValidations.numberValidation(amountInput, "quantity");
-                if (amountResult != null)
-                    return;
-                double amount = Double.parseDouble(amountInput);
-                /* the double amount = Double.parseDouble(amountInput); is used because if user inputs string
-                * then he will crash the program so this means we will use the same try and catch block
-                * in all the lines well lest turn it to stirng goes in the number validations method and reuturns
-                * it to double again*/
-                System.out.println("Recycled? true/false:");
-                boolean recycled = input.nextBoolean();
-
-                activity = ActivityFactory.createActivity("Waste", LocalDate.now(), type, amount, recycled);
-            }
-
-            if (activity != null) {
-                double co2 = activity.calculateCO2();
-                System.out.println("CO2 = " + co2);
-
-                String saveResult = FileReaderService.saveCO2(username, choice, co2, co2Files);
-                if (saveResult != null)
-                    System.out.println(saveResult);
-            }
-        }
-
+        usernameField.setStyle("-fx-border-color:  #DADADA ;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10");
+        passwordField.setStyle("-fx-border-color:  #DADADA;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+        visiblePasswordField.setStyle("-fx-border-color: #DADADA;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+        loginmessage.setText("Logged in successfully!");
+        loginmessage.setStyle("-fx-font-size: 13; -fx-text-fill: #2E7D32; -fx-font-weight: bold;");
     }
+    /* this method happens upon clicking the button when
+    * it is clicked based on user input the static mathods are made
+    * on the username and password to validate and the if statements display
+    * the message based on user input */
+    @FXML
+    
+    public void addAccountButton(ActionEvent event){ // this will be studied starting from here
+        FileReaderService fr = new FileReaderService("src//users.csv");
+        ArrayList<String> files = fr.readFile();
+
+        String name = newNameField.getText();
+        String username = newUsernameField.getText();
+        String password = newPasswordField.getText();
+
+        String result = AddAccount.addAccount(name, username, password, files);
+
+        if(result!=null){
+            addAccountMessage.setText(result);
+            addAccountMessage.setStyle("-fx-font-size: 13; -fx-text-fill: red; -fx-font-weight: bold;");
+            newNameField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            newUsernameField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            newPasswordField.setStyle("-fx-border-color: red;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+            return;
+        }
+        // addAccountMessage is a label
+        newNameField.setStyle("-fx-border-color:#DADADA ;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+        newUsernameField.setStyle("-fx-border-color: #DADADA;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+        newPasswordField.setStyle("-fx-border-color: #DADADA;-fx-border-radius:10;-fx-background-radius: 10;-fx-padding: 10 ");
+        addAccountMessage.setText("account created");
+        addAccountMessage.setStyle("-fx-font-size: 13; -fx-text-fill: #2E7D32; -fx-font-weight: bold;");
+    }
+
+    @FXML
+    public void showAddAccount(MouseEvent event) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(Paths.get("src/main/java/com/example/demo/AddAccount.fxml").toUri().toURL());
+        Scene scene = new Scene(fxmlLoader.load(), 600, 900);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    // this is where when i press the the signup it takes me to the account
+
+    @FXML
+    public void showLogin(MouseEvent event) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(Paths.get("src/main/java/com/example/demo/SceneBuilder.fxml").toUri().toURL());
+        Scene scene = new Scene(fxmlLoader.load(), 600, 900);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+    // this takes me back to the login page when i click the label
+
 }

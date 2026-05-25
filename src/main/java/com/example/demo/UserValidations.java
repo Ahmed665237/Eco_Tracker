@@ -17,12 +17,36 @@ import java.util.ArrayList;
         }
         if(con==true)
             return name+" cannot contain digits ONLY!";
-        if(ip.length()>12)
+        if(ip.length()>20)
             return name+" is too long";
         if(ip.length()<4)
             return name+" is too short";
         return null;
     } // validations before checking if the account exists or not
+
+    public static String nameValidation(String firstName){
+        boolean con=false;
+        if(firstName.length()==0)
+            return "you have to enter chararacters in name";
+        for(int i=0;i<firstName.length();i++){
+            if(Character.isDigit(firstName.charAt(i)))// a real name cant contain numbers
+                con=true;
+        }
+        if(con==true)
+            return "name cannot contain numbers";
+        if(firstName.length()>15)
+            return "name cannot be more than 15 characters";
+        return null;
+    }
+
+    public static String accountExists(String username, ArrayList<String> files){
+        for(int i=0;i<files.size();i++){
+            String [] f=files.get(i).split(",");
+            if(f[1].equals(username))
+                return "account already exists";
+        }
+        return null;
+    }// using string seperation to reach the username only
 
     public static String numberValidation(String input, String name) {
         if (input.length() == 0) {
@@ -47,9 +71,10 @@ import java.util.ArrayList;
             String [] f=files.get(i).split(",");
             if(f[1].equals(username)) {
                 check = true;
-                k=i;
+                k=i; // k is used to loop till this part of the csv and not all saving time
             }
         }
+        // checking if user exits in csv file
         if(!check)
             return "incorrect username ";
         else{
