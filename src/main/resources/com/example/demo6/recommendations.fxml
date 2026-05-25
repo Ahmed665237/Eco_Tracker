@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.demo6.recController"
+            style="-fx-background-color: white; -fx-background: white;">
+
+    <content>
+<AnchorPane prefHeight="980" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <Label layoutX="154.0" layoutY="38.0" text="Today's Green Tip" textFill="#2e7d32">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="39.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="90.0" text="Here's a personalized tip to help you reduce your carbon footprint">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#4caf50de" height="100.0" layoutX="59.0" layoutY="149.0" opacity="0.57" stroke="#2e7d32" strokeType="OUTSIDE" strokeWidth="2.0" width="500.0" />
+      <Label fx:id="HighestCategoryLabel" layoutX="225.0" layoutY="164.0" text="Highest Category" textFill="#f5f5f5">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="26.0" layoutY="26.0" mnemonicParsing="false" onAction="#toHome" prefHeight="31.0" prefWidth="41.0" style="-fx-background-color: 15;" />
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="WHITESMOKE" height="561.0" layoutX="57.0" layoutY="289.0" stroke="#157210" strokeType="INSIDE" width="504.0" />
+      <Button fx:id="back2results" contentDisplay="CENTER" layoutX="220.0" layoutY="738.0" mnemonicParsing="false" onAction="#toResults" prefHeight="56.0" prefWidth="182.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #2e7d32; -fx-background-radius: 10; -fx-border-image-width: 10; -fx-border-radius: 15;" text="Back to results" textAlignment="CENTER" textFill="#2e7d32">
+         <effect>
+            <Glow />
+         </effect>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+      <Label layoutX="98.0" layoutY="315.0" text="Our Recommendation" textFill="#1e6114">
+         <font>
+            <Font name="Berlin Sans FB" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="RecommendationLabel" layoutX="98.0" layoutY="368.0">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
+      <ImageView fitHeight="70.0" fitWidth="71.0" layoutX="76.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="BackArrow" fitHeight="18.0" fitWidth="21.0" layoutX="36.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="highestcategory" layoutX="286.0" layoutY="199.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
+
+    </content>
+
+</ScrollPane>

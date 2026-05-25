@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: white; -fx-background: white;" vbarPolicy="AS_NEEDED" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo6.ResController">
+
+    <content>
+        <AnchorPane fx:id="anchorpane" prefHeight="980.0" prefWidth="600.0">
+            <children>
+                <Label layoutX="233.0" layoutY="48.0" text="EcoTracker" textFill="#2e7d32">
+                    <font><Font name="Berlin Sans FB" size="31.0" /></font>
+                </Label>
+                <Label fx:id="username" layoutX="107.0" layoutY="116.0" prefHeight="17.0" prefWidth="17.0" />
+                <Label layoutX="49.0" layoutY="137.0" text="Here's Today' overview.">
+                    <font><Font size="15.0" /></font>
+                </Label>
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f5fc" height="200.0" layoutX="51.0" layoutY="195.0" stroke="#26631bb4" strokeType="INSIDE" strokeWidth="2.0" width="500.0" />
+                <Label layoutX="57.0" layoutY="701.0" text="Score Progress Bar">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Label>
+                <Line endX="120.0" layoutX="239.0" layoutY="302.0" rotate="90.0" startX="12.0" stroke="#164d24" />
+                <Label layoutX="49.0" layoutY="112.0" text="Hello!">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Label>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4caf50d6" height="103.0" layoutX="-4.0" layoutY="825.0" stroke="#62ba47c1" strokeType="INSIDE" width="609.0" />
+                <Label fx:id="totalCO2" layoutX="147.0" layoutY="315.0" prefHeight="25.0" prefWidth="35.0" textAlignment="CENTER">
+                    <font><Font size="16.0" /></font>
+                </Label>
+                <Label layoutX="157.0" layoutY="357.0" text="Kg" textAlignment="CENTER" />
+                <Label layoutX="388.0" layoutY="280.0" text="Total Score">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                </Label>
+                <Label fx:id="totalScore" layoutX="408.0" layoutY="315.0" prefHeight="25.0" prefWidth="35.0">
+                    <font><Font size="16.0" /></font>
+                </Label>
+                <Label layoutX="417.0" layoutY="357.0" text="Pts" textAlignment="CENTER" />
+                <Button fx:id="tip" layoutX="395.0" layoutY="846.0" mnemonicParsing="false" onAction="#toTip" prefHeight="38.0" prefWidth="174.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="Tip of the day">
+                    <font><Font name="System Bold" size="15.0" /></font>
+                </Button>
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#f5f5f5fc" height="200.0" layoutX="50.0" layoutY="439.0" stroke="#26631bb4" strokeType="INSIDE" strokeWidth="2.0" width="500.0" />
+                <Label fx:id="HighestCategory" layoutX="151.0" layoutY="549.0" prefHeight="25.0" prefWidth="40.0">
+                    <font><Font size="16.0" /></font>
+                </Label>
+                <Line endX="120.0" layoutX="239.0" layoutY="539.0" rotate="90.0" startX="12.0" stroke="#164d24" />
+                <ProgressBar fx:id="scoreProgressBar" layoutX="55.0" layoutY="738.0" prefHeight="18.0" prefWidth="500.0" progress="0.0" />
+                <Button fx:id="home" layoutX="32.0" layoutY="846.0" mnemonicParsing="false" onAction="#GoToHome" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="           Home">
+                    <font><Font name="System Bold" size="15.0" /></font>
+                </Button>
+                <Label layoutX="89.0" layoutY="280.0" text="Total Carbon Footprint">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                </Label>
+                <Label layoutX="368.0" layoutY="529.0" text="Lowest  Category">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                </Label>
+                <Label layoutX="115.0" layoutY="529.0" text="Highest Category">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                </Label>
+                <ImageView fx:id="backArrow" fitHeight="29.0" fitWidth="42.0" layoutX="36.0" layoutY="851.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fitHeight="51.0" fitWidth="58.0" layoutX="136.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fitHeight="51.0" fitWidth="58.0" layoutX="396.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fitHeight="51.0" fitWidth="58.0" layoutX="396.0" layoutY="478.0" pickOnBounds="true" preserveRatio="true" />
+                <AnchorPane layoutX="72.0" layoutY="439.0" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                </AnchorPane>
+                <Label fx:id="lowestCategory" layoutX="395.0" layoutY="569.0" prefHeight="25.0" prefWidth="44.0">
+                    <font><Font size="16.0" /></font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </content>
+
+</ScrollPane>
