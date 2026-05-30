@@ -78,4 +78,52 @@ public class EcoCalculator {
             default -> "Good job maintaining your eco habits.";
         };
     }
+
+    public double CalculateScore(User user) {
+        return calculateScore(user);
+    }
+
+    public String getLowestCategory(User user) {
+        double transport = 0;
+        double electricity = 0;
+        double water = 0;
+        double waste = 0;
+        double food = 0;
+
+        for (Activity activity : user.getActivities()) {
+            switch (activity.getCategory()) {
+                case "Transport" -> transport += activity.calculateCO2();
+                case "Electricity" -> electricity += activity.calculateCO2();
+                case "Water" -> water += activity.calculateCO2();
+                case "Waste" -> waste += activity.calculateCO2();
+                case "Food" -> food += activity.calculateCO2();
+            }
+        }
+
+        double lowest = transport;
+        String lowestCategory = "Transport";
+
+        if (electricity < lowest) {
+            lowest = electricity;
+            lowestCategory = "Electricity";
+        }
+        if (water < lowest) {
+            lowest = water;
+            lowestCategory = "Water";
+        }
+        if (waste < lowest) {
+            lowest = waste;
+            lowestCategory = "Waste";
+        }
+        if (food < lowest) {
+            lowest = food;
+            lowestCategory = "Food";
+        }
+
+        return lowestCategory;
+    }
+
+    public String recommendationsGenerator(User user) {
+        return generateRecommendation(user);
+    }
 }

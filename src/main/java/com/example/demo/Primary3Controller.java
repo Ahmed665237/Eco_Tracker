@@ -1,4 +1,4 @@
-package org.example;
+package com.example.demo;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
@@ -260,3 +260,4 @@ public class Primary3Controller {
         alert.showAndWait();
     }
 }
+
